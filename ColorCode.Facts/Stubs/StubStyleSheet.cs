@@ -1,4 +1,5 @@
 using ColorCode.Styling;
+using ColorCodeStandard;
 
 namespace ColorCode.Stubs
 {

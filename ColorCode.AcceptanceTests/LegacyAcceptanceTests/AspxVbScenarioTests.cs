@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using ColorCodeStandard;
+using Xunit;
 
 namespace ColorCode.AspxVbAcceptanceTests
 {

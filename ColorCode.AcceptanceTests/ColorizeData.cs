@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using ColorCode.Common;
+using ColorCodeStandard.Common;
 using Xunit.Extensions;
 
 namespace ColorCode

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using ColorCode.Compilation;
 using ColorCode.Stubs;
+using ColorCodeStandard;
+using ColorCodeStandard.Compilation;
+using ColorCodeStandard.Parsing;
 using Xunit;
 
 namespace ColorCode.Parsing

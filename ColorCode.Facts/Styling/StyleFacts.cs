@@ -1,4 +1,5 @@
 ﻿using System;
+using ColorCodeStandard;
 using Xunit;
 
 namespace ColorCode.Styling

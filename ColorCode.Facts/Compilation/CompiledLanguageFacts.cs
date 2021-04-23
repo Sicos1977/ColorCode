@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using ColorCodeStandard.Compilation;
 using Xunit;
 
 namespace ColorCode.Compilation

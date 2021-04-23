@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using ColorCodeStandard;
 using Xunit;
 using Xunit.Extensions;
 

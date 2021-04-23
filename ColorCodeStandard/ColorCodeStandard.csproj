@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>ColorCodeStandard.snk</AssemblyOriginatorKeyFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>ColorCodeStandard is a library for colorizing source code (also known as syntax highlighting) and a clone of the ColorCode package but with some bug fixes, upgrade to .net standard 2.0 and a darkmode stylesheet</Description>
+    <RepositoryUrl>https://github.com/Sicos1977/ColorCode</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>html color code syntax highlighting</PackageTags>
+    <PackageReleaseNotes>A clone of the ColorCode package but with some bug fixes, upgrade to .net standard 2.0 and a darkmode stylesheet</PackageReleaseNotes>
+    <Copyright>Microsoft and Kees van Spelde</Copyright>
+    <PackageProjectUrl>https://github.com/Sicos1977/ColorCode</PackageProjectUrl>
+    <Authors>Microsoft, Matt Hawley - Kees van Spelde</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Update="Common\ILanguageRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Compilation\Languages\Ashx.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Compilation\Languages\AspxCs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Compilation\Languages\AspxVb.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Compilation\Languages\Html.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Compilation\Languages\JavaScript.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Compilation\Languages\Sql.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Compilation\Languages\VbDotNet.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Compilation\Languages\Xml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Parsing\ILanguageParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="StyleDictionary.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+</Project>

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using ColorCode.Stubs;
+using ColorCodeStandard;
+using ColorCodeStandard.Common;
 using Xunit;
 
 namespace ColorCode.Common

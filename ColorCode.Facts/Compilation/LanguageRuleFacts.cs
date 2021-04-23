@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ColorCodeStandard;
 using Xunit;
 
 namespace ColorCode.Compilation

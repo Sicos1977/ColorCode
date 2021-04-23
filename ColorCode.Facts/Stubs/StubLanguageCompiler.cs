@@ -1,5 +1,7 @@
 using System;
 using ColorCode.Compilation;
+using ColorCodeStandard;
+using ColorCodeStandard.Compilation;
 
 namespace ColorCode.Stubs
 {

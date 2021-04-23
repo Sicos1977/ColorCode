@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using ColorCode.Stubs;
+using ColorCodeStandard;
+using ColorCodeStandard.Compilation;
 using Xunit;
 
 namespace ColorCode.Compilation

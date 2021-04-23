@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using ColorCode.Common;
+using ColorCodeStandard.Common;
 using Xunit;
 
 namespace ColorCode.Common

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using ColorCode.Common;
-using ColorCode.Parsing;
+using ColorCodeStandard.Common;
 using ColorCode.Stubs;
-using ColorCode.Styling;
-using ColorCode.Styling.StyleSheets;
+using ColorCodeStandard;
+using ColorCodeStandard.Formatting;
+using ColorCodeStandard.Parsing;
+using ColorCodeStandard.Styling.StyleSheets;
 using Xunit;
 
 namespace ColorCode.Formatting

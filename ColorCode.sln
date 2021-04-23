@@ -1,13 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F7333FE4-B5FB-463E-A1DF-7B95405AE755}"
 	ProjectSection(SolutionItems) = preProject
 		ColorCode.msbuild = ColorCode.msbuild
 		GlobalAssemblyInfo.cs = GlobalAssemblyInfo.cs
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorCode", "ColorCode\ColorCode.csproj", "{37438935-D221-4FD8-A10E-4EC5356B0F94}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorCode.AcceptanceTests", "ColorCode.AcceptanceTests\ColorCode.AcceptanceTests.csproj", "{B25E2B63-11CB-4F5C-AADE-99278AC8DCAC}"
 EndProject
@@ -19,16 +19,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D1F9F4
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorCodeStandard", "ColorCodeStandard\ColorCodeStandard.csproj", "{0450B700-1BB7-4FDA-A83F-F1FA1CDFC289}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{37438935-D221-4FD8-A10E-4EC5356B0F94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{37438935-D221-4FD8-A10E-4EC5356B0F94}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{37438935-D221-4FD8-A10E-4EC5356B0F94}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{37438935-D221-4FD8-A10E-4EC5356B0F94}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B25E2B63-11CB-4F5C-AADE-99278AC8DCAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B25E2B63-11CB-4F5C-AADE-99278AC8DCAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B25E2B63-11CB-4F5C-AADE-99278AC8DCAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -37,8 +35,15 @@ Global
 		{87A33AAD-7496-4C6A-9D3A-258276A97188}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87A33AAD-7496-4C6A-9D3A-258276A97188}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87A33AAD-7496-4C6A-9D3A-258276A97188}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0450B700-1BB7-4FDA-A83F-F1FA1CDFC289}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0450B700-1BB7-4FDA-A83F-F1FA1CDFC289}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0450B700-1BB7-4FDA-A83F-F1FA1CDFC289}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0450B700-1BB7-4FDA-A83F-F1FA1CDFC289}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A25A7A46-FD33-485F-8332-D86F90E9EF20}
 	EndGlobalSection
 EndGlobal

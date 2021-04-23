@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using ColorCodeStandard;
 using Xunit;
 
 namespace ColorCode

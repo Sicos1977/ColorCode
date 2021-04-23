@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using ColorCode.Parsing;
 using ColorCode.Stubs;
+using ColorCodeStandard;
+using ColorCodeStandard.Parsing;
 using Xunit;
 
 namespace ColorCode

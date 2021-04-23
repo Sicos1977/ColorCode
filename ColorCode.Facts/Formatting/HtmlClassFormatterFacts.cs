@@ -4,6 +4,10 @@ using System.Drawing;
 using ColorCode.Common;
 using ColorCode.Parsing;
 using ColorCode.Stubs;
+using ColorCodeStandard;
+using ColorCodeStandard.Common;
+using ColorCodeStandard.Formatting;
+using ColorCodeStandard.Parsing;
 using Xunit;
 
 namespace ColorCode.Formatting

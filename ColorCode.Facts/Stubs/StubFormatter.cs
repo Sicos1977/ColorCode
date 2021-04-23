@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
 using ColorCode.Parsing;
+using ColorCodeStandard;
+using ColorCodeStandard.Parsing;
 
 namespace ColorCode.Stubs
 {
