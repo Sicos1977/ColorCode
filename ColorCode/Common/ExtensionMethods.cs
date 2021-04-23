@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace ColorCode.Common
 {
-    public static class ExtensionMethods
+    internal static class ExtensionMethods
     {
         public static void SortStable<T>(this IList<T> list,
             Comparison<T> comparison)

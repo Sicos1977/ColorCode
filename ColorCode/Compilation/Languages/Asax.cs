@@ -30,24 +30,16 @@ namespace ColorCode.Compilation.Languages
                     @"(?is)(?<=<%@.+?language=""c\#"".*?%>.*?<script.*?runat=""server"">)(.*)(?=</script>)",
                     new Dictionary<int, string>
                     {
-                        {1, string.Format("{0}{1}", ScopeName.LanguagePrefix, LanguageId.CSharp)}
+                        {1, $"{ScopeName.LanguagePrefix}{LanguageId.CSharp}"}
                     }),
                 new LanguageRule(
                     @"(?is)(?<=<%@.+?language=""vb"".*?%>.*?<script.*?runat=""server"">)(.*)(?=</script>)",
                     new Dictionary<int, string>
                     {
-                        {1, string.Format("{0}{1}", ScopeName.LanguagePrefix, LanguageId.VbDotNet)}
+                        {1, $"{ScopeName.LanguagePrefix}{LanguageId.VbDotNet}"}
                     }),
                 new LanguageRule(
-                    @"(?xi)(</?)
-                                         (?: ([a-z][a-z0-9-]*)(:) )*
-                                         ([a-z][a-z0-9-_]*)
-                                         (?:
-                                            [\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*([^\s\n""']+?)
-                                           |[\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*(""[^\n]+?"")
-                                           |[\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*('[^\n]+?')
-                                           |[\s\n]+([a-z0-9-_]+) )*
-                                         [\s\n]*
+                    @"(?xi)(</?)(?: ([a-z][a-z0-9-]*)(:) )*([a-z][a-z0-9-_]*)(?:[\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*([^\s\n""']+?)|[\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*(""[^\n]+?"")|[\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*('[^\n]+?')|[\s\n]+([a-z0-9-_]+) )*[\s\n]*
                                          (/?>)",
                     new Dictionary<int, string>
                     {

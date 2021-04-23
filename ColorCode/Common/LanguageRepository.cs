@@ -8,16 +8,16 @@ namespace ColorCode.Common
 {
     public class LanguageRepository : ILanguageRepository
     {
-        private readonly Dictionary<string, ILanguage> loadedLanguages;
-        private readonly ReaderWriterLockSlim loadLock;
+        private readonly Dictionary<string, ILanguage> _loadedLanguages;
+        private readonly ReaderWriterLockSlim _loadLock;
 
         public LanguageRepository(Dictionary<string, ILanguage> loadedLanguages)
         {
-            this.loadedLanguages = loadedLanguages;
-            loadLock = new ReaderWriterLockSlim();
+            _loadedLanguages = loadedLanguages;
+            _loadLock = new ReaderWriterLockSlim();
         }
 
-        public IEnumerable<ILanguage> All => loadedLanguages.Values;
+        public IEnumerable<ILanguage> All => _loadedLanguages.Values;
 
         public ILanguage FindById(string languageId)
         {
@@ -25,16 +25,16 @@ namespace ColorCode.Common
 
             ILanguage language = null;
 
-            loadLock.EnterReadLock();
+            _loadLock.EnterReadLock();
 
             try
             {
-                if (loadedLanguages.ContainsKey(languageId))
-                    language = loadedLanguages[languageId];
+                if (_loadedLanguages.ContainsKey(languageId))
+                    language = _loadedLanguages[languageId];
             }
             finally
             {
-                loadLock.ExitReadLock();
+                _loadLock.ExitReadLock();
             }
 
             return language;
@@ -47,15 +47,15 @@ namespace ColorCode.Common
             if (string.IsNullOrEmpty(language.Id))
                 throw new ArgumentException("The language identifier must not be null or empty.", "language");
 
-            loadLock.EnterWriteLock();
+            _loadLock.EnterWriteLock();
 
             try
             {
-                loadedLanguages[language.Id] = language;
+                _loadedLanguages[language.Id] = language;
             }
             finally
             {
-                loadLock.ExitWriteLock();
+                _loadLock.ExitWriteLock();
             }
         }
     }

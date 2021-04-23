@@ -30,13 +30,13 @@ namespace ColorCode.Compilation.Languages
                     @"(?is)(?<=<%@.+?language=""c\#"".*?%>)(.*)",
                     new Dictionary<int, string>
                     {
-                        {1, string.Format("{0}{1}", ScopeName.LanguagePrefix, LanguageId.CSharp)}
+                        {1, $"{ScopeName.LanguagePrefix}{LanguageId.CSharp}"}
                     }),
                 new LanguageRule(
                     @"(?is)(?<=<%@.+?language=""vb"".*?%>)(.*)",
                     new Dictionary<int, string>
                     {
-                        {1, string.Format("{0}{1}", ScopeName.LanguagePrefix, LanguageId.VbDotNet)}
+                        {1, $"{ScopeName.LanguagePrefix}{LanguageId.VbDotNet}"}
                     }),
                 new LanguageRule(
                     @"(<%)(@)(?:\s+([a-zA-Z0-9]+))*(?:\s+([a-zA-Z0-9]+)(=)(""[^\n]*?""))*\s*?(%>)",

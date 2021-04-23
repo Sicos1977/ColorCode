@@ -35,17 +35,7 @@ namespace ColorCode.Compilation.Languages
                         {5, ScopeName.HtmlTagDelimiter}
                     }),
                 new LanguageRule(
-                    @"(?xis)(<)
-                                          (script)
-                                          (?:
-                                             [\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*([^\s\n""']+?)
-                                            |[\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*(""[^\n]+?"")
-                                            |[\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*('[^\n]+?')
-                                            |[\s\n]+([a-z0-9-_]+) )*
-                                          [\s\n]*
-                                          (>)
-                                          (.*?)
-                                          (</)(script)(>)",
+                    @"(?xis)(<)(script)(?:[\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*([^\s\n""']+?)|[\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*(""[^\n]+?"")|[\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*('[^\n]+?')|[\s\n]+([a-z0-9-_]+) )*[\s\n]*(>)(.*?)(</)(script)(>)",
                     new Dictionary<int, string>
                     {
                         {1, ScopeName.HtmlTagDelimiter},
@@ -67,16 +57,7 @@ namespace ColorCode.Compilation.Languages
                         {17, ScopeName.HtmlTagDelimiter}
                     }),
                 new LanguageRule(
-                    @"(?xis)(</?)
-                                          (?: ([a-z][a-z0-9-]*)(:) )*
-                                          ([a-z][a-z0-9-_]*)
-                                          (?:
-                                             [\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*([^\s\n""']+?)
-                                            |[\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*(""[^\n]+?"")
-                                            |[\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*('[^\n]+?')
-                                            |[\s\n]+([a-z0-9-_]+) )*
-                                          [\s\n]*
-                                          (/?>)",
+                    @"(?xis)(</?)(?: ([a-z][a-z0-9-]*)(:) )*([a-z][a-z0-9-_]*)(?:[\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*([^\s\n""']+?)|[\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*(""[^\n]+?"")|[\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*('[^\n]+?')|[\s\n]+([a-z0-9-_]+) )*[\s\n]*(/?>)",
                     new Dictionary<int, string>
                     {
                         {1, ScopeName.HtmlTagDelimiter},

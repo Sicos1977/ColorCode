@@ -12,14 +12,14 @@ namespace ColorCode.Compilation
     public class LanguageCompiler : ILanguageCompiler
     {
         private static readonly Regex numberOfCapturesRegex = new Regex(@"(?x)(?<!\\)\((?!\?)", RegexOptions.Compiled);
-        private readonly Dictionary<string, CompiledLanguage> compiledLanguages;
-        private readonly ReaderWriterLockSlim compileLock;
+        private readonly Dictionary<string, CompiledLanguage> _compiledLanguages;
+        private readonly ReaderWriterLockSlim _compileLock;
 
         public LanguageCompiler(Dictionary<string, CompiledLanguage> compiledLanguages)
         {
-            this.compiledLanguages = compiledLanguages;
+            this._compiledLanguages = compiledLanguages;
 
-            compileLock = new ReaderWriterLockSlim();
+            _compileLock = new ReaderWriterLockSlim();
         }
 
         public CompiledLanguage Compile(ILanguage language)
@@ -27,56 +27,56 @@ namespace ColorCode.Compilation
             Guard.ArgNotNull(language, "language");
 
             if (string.IsNullOrEmpty(language.Id))
-                throw new ArgumentException("The language identifier must not be null.", "language");
+                throw new ArgumentException("The language identifier must not be null.", nameof(language));
 
             CompiledLanguage compiledLanguage;
 
-            compileLock.EnterReadLock();
+            _compileLock.EnterReadLock();
             try
             {
                 // for performance reasons we should first try with
                 // only a read lock since the majority of the time
                 // it'll be created already and upgradeable lock blocks
-                if (compiledLanguages.ContainsKey(language.Id))
-                    return compiledLanguages[language.Id];
+                if (_compiledLanguages.ContainsKey(language.Id))
+                    return _compiledLanguages[language.Id];
             }
             finally
             {
-                compileLock.ExitReadLock();
+                _compileLock.ExitReadLock();
             }
 
-            compileLock.EnterUpgradeableReadLock();
+            _compileLock.EnterUpgradeableReadLock();
             try
             {
-                if (compiledLanguages.ContainsKey(language.Id))
+                if (_compiledLanguages.ContainsKey(language.Id))
                 {
-                    compiledLanguage = compiledLanguages[language.Id];
+                    compiledLanguage = _compiledLanguages[language.Id];
                 }
                 else
                 {
-                    compileLock.EnterWriteLock();
+                    _compileLock.EnterWriteLock();
 
                     try
                     {
                         if (string.IsNullOrEmpty(language.Name))
-                            throw new ArgumentException("The language name must not be null or empty.", "language");
+                            throw new ArgumentException("The language name must not be null or empty.", nameof(language));
 
                         if (language.Rules == null || language.Rules.Count == 0)
-                            throw new ArgumentException("The language rules collection must not be empty.", "language");
+                            throw new ArgumentException("The language rules collection must not be empty.", nameof(language));
 
                         compiledLanguage = CompileLanguage(language);
 
-                        compiledLanguages.Add(compiledLanguage.Id, compiledLanguage);
+                        _compiledLanguages.Add(compiledLanguage.Id, compiledLanguage);
                     }
                     finally
                     {
-                        compileLock.ExitWriteLock();
+                        _compileLock.ExitWriteLock();
                     }
                 }
             }
             finally
             {
-                compileLock.ExitUpgradeableReadLock();
+                _compileLock.ExitUpgradeableReadLock();
             }
 
             return compiledLanguage;

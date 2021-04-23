@@ -50,7 +50,7 @@ namespace ColorCode.Compilation.Languages
                     new Dictionary<int, string>
                     {
                         {1, ScopeName.HtmlServerSideScript},
-                        {2, string.Format("{0}{1}", ScopeName.LanguagePrefix, LanguageId.CSharp)},
+                        {2, $"{ScopeName.LanguagePrefix}{LanguageId.CSharp}"},
                         {3, ScopeName.HtmlServerSideScript}
                     }),
                 new LanguageRule(RuleFormats.ServerScript, RuleCaptures.CSharpScript),
@@ -66,16 +66,7 @@ namespace ColorCode.Compilation.Languages
                     }),
                 new LanguageRule(RuleFormats.JavaScript, RuleCaptures.JavaScript),
                 new LanguageRule(
-                    @"(?xis)(</?)
-                                          (?: ([a-z][a-z0-9-]*)(:) )*
-                                          ([a-z][a-z0-9-_]*)
-                                          (?:
-                                             [\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*([^\s\n""']+?)
-                                            |[\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*(""[^\n]+?"")
-                                            |[\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*('[^\n]+?')
-                                            |[\s\n]+([a-z0-9-_]+) )*
-                                          [\s\n]*
-                                          (/?>)",
+                    @"(?xis)(</?)(?: ([a-z][a-z0-9-]*)(:) )*([a-z][a-z0-9-_]*)(?:[\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*([^\s\n""']+?)|[\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*(""[^\n]+?"")|[\s\n]+([a-z0-9-_]+)[\s\n]*(=)[\s\n]*('[^\n]+?')|[\s\n]+([a-z0-9-_]+) )*[\s\n]*(/?>)",
                     new Dictionary<int, string>
                     {
                         {1, ScopeName.HtmlTagDelimiter},
