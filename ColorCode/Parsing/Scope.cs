@@ -8,23 +8,23 @@ namespace ColorCode.Parsing
 {
     public class Scope
     {
-        public Scope(string name,
-                     int index,
-                     int length)
-        {
-            Guard.ArgNotNullAndNotEmpty(name, "name");
-            
-            Name = name;
-            Index = index;
-            Length = length;
-            Children = new List<Scope>();
-        }
-
         public IList<Scope> Children { get; set; }
         public int Index { get; set; }
         public int Length { get; set; }
         public Scope Parent { get; set; }
         public string Name { get; set; }
+
+        public Scope(string name,
+            int index,
+            int length)
+        {
+            Guard.ArgNotNullAndNotEmpty(name, "name");
+
+            Name = name;
+            Index = index;
+            Length = length;
+            Children = new List<Scope>();
+        }
 
         public void AddChild(Scope childScope)
         {

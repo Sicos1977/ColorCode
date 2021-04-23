@@ -17,17 +17,14 @@ namespace ColorCode.Common
             loadLock = new ReaderWriterLockSlim();
         }
 
-        public IEnumerable<ILanguage> All
-        {
-            get { return loadedLanguages.Values; }
-        }
+        public IEnumerable<ILanguage> All => loadedLanguages.Values;
 
         public ILanguage FindById(string languageId)
         {
             Guard.ArgNotNullAndNotEmpty(languageId, "languageId");
-            
+
             ILanguage language = null;
-            
+
             loadLock.EnterReadLock();
 
             try
@@ -49,7 +46,7 @@ namespace ColorCode.Common
 
             if (string.IsNullOrEmpty(language.Id))
                 throw new ArgumentException("The language identifier must not be null or empty.", "language");
-            
+
             loadLock.EnterWriteLock();
 
             try

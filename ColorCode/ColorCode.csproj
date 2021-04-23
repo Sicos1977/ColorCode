@@ -104,6 +104,7 @@
     <Compile Include="Formatters.cs" />
     <Compile Include="Formatting\HtmlClassFormatter.cs" />
     <Compile Include="Formatting\HtmlFormatter.cs" />
+    <Compile Include="Styling\StyleSheets\DarkModeStyleSheet.cs" />
     <Compile Include="System.Web\Helpers.cs" />
     <Compile Include="System.Web\HttpEncoder.cs" />
     <Compile Include="System.Web\HttpUtility.cs" />
@@ -158,12 +159,4 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

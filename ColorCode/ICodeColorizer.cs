@@ -5,32 +5,32 @@ using System.IO;
 namespace ColorCode
 {
     /// <summary>
-    /// Defines the contract for a code colorizer.
+    ///     Defines the contract for a code colorizer.
     /// </summary>
-    /// <seealso cref="CodeColorizer"/>
+    /// <seealso cref="CodeColorizer" />
     public interface ICodeColorizer
     {
         /// <summary>
-        /// Colorizes source code using the specified language, the default formatter, and the default style sheet.
+        ///     Colorizes source code using the specified language, the default formatter, and the default style sheet.
         /// </summary>
         /// <param name="sourceCode">The source code to colorize.</param>
         /// <param name="language">The language to use to colorize the source code.</param>
         /// <returns>The colorized source code.</returns>
         string Colorize(string sourceCode,
-                        ILanguage language);
+            ILanguage language);
 
         /// <summary>
-        /// Colorizes source code using the specified language, the default formatter, and the default style sheet.
+        ///     Colorizes source code using the specified language, the default formatter, and the default style sheet.
         /// </summary>
         /// <param name="sourceCode">The source code to colorize.</param>
         /// <param name="language">The language to use to colorize the source code.</param>
         /// <param name="textWriter">The text writer to which the colorized source code will be written.</param>
         void Colorize(string sourceCode,
-                      ILanguage language,
-                      TextWriter textWriter);
+            ILanguage language,
+            TextWriter textWriter);
 
         /// <summary>
-        /// Colorizes source code using the specified language, formatter, and style sheet.
+        ///     Colorizes source code using the specified language, formatter, and style sheet.
         /// </summary>
         /// <param name="sourceCode">The source code to colorize.</param>
         /// <param name="language">The language to use to colorize the source code.</param>
@@ -39,9 +39,9 @@ namespace ColorCode
         /// <param name="styleSheet">The style sheet to use to colorize the source code.</param>
         /// <param name="textWriter">The text writer to which the colorized source code will be written.</param>
         void Colorize(string sourceCode,
-                      ILanguage language,
-                      IFormatter formatter,
-                      IStyleSheet styleSheet,
-                      TextWriter textWriter);
+            ILanguage language,
+            IFormatter formatter,
+            IStyleSheet styleSheet,
+            TextWriter textWriter);
     }
 }

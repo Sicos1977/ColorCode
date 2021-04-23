@@ -14,47 +14,50 @@ namespace ColorCode.Parsing
         private readonly ILanguageRepository languageRepository;
 
         public LanguageParser(ILanguageCompiler languageCompiler,
-                              ILanguageRepository languageRepository)
+            ILanguageRepository languageRepository)
         {
             this.languageCompiler = languageCompiler;
             this.languageRepository = languageRepository;
         }
 
         public void Parse(string sourceCode,
-                          ILanguage language,
-                          Action<string, IList<Scope>> parseHandler)
+            ILanguage language,
+            Action<string, IList<Scope>> parseHandler)
         {
             if (string.IsNullOrEmpty(sourceCode))
                 return;
 
-            CompiledLanguage compiledLanguage = languageCompiler.Compile(language);
+            var compiledLanguage = languageCompiler.Compile(language);
 
             Parse(sourceCode, compiledLanguage, parseHandler);
         }
 
         private void Parse(string sourceCode,
-                           CompiledLanguage compiledLanguage,
-                           Action<string, IList<Scope>> parseHandler)
+            CompiledLanguage compiledLanguage,
+            Action<string, IList<Scope>> parseHandler)
         {
-            Match regexMatch = compiledLanguage.Regex.Match(sourceCode);
+            var regexMatch = compiledLanguage.Regex.Match(sourceCode);
 
             if (!regexMatch.Success)
+            {
                 parseHandler(sourceCode, new List<Scope>());
+            }
             else
             {
-                int currentIndex = 0;
+                var currentIndex = 0;
 
                 while (regexMatch.Success)
                 {
-                    string sourceCodeBeforeMatch = sourceCode.Substring(currentIndex, regexMatch.Index - currentIndex);
+                    var sourceCodeBeforeMatch = sourceCode.Substring(currentIndex, regexMatch.Index - currentIndex);
                     if (!string.IsNullOrEmpty(sourceCodeBeforeMatch))
                         parseHandler(sourceCodeBeforeMatch, new List<Scope>());
 
-                    string matchedSourceCode = sourceCode.Substring(regexMatch.Index, regexMatch.Length);
+                    var matchedSourceCode = sourceCode.Substring(regexMatch.Index, regexMatch.Length);
                     if (!string.IsNullOrEmpty(matchedSourceCode))
                     {
-                        List<Scope> capturedStylesForMatchedFragment = GetCapturedStyles(regexMatch, regexMatch.Index, compiledLanguage);
-                        List<Scope> capturedStyleTree = CreateCapturedStyleTree(capturedStylesForMatchedFragment);
+                        var capturedStylesForMatchedFragment =
+                            GetCapturedStyles(regexMatch, regexMatch.Index, compiledLanguage);
+                        var capturedStyleTree = CreateCapturedStyleTree(capturedStylesForMatchedFragment);
                         parseHandler(matchedSourceCode, capturedStyleTree);
                     }
 
@@ -62,7 +65,7 @@ namespace ColorCode.Parsing
                     regexMatch = regexMatch.NextMatch();
                 }
 
-                string sourceCodeAfterAllMatches = sourceCode.Substring(currentIndex);
+                var sourceCodeAfterAllMatches = sourceCode.Substring(currentIndex);
                 if (!string.IsNullOrEmpty(sourceCodeAfterAllMatches))
                     parseHandler(sourceCodeAfterAllMatches, new List<Scope>());
             }
@@ -75,7 +78,7 @@ namespace ColorCode.Parsing
             var capturedStyleTree = new List<Scope>(capturedStyles.Count);
             Scope currentScope = null;
 
-            foreach (Scope capturedStyle in capturedStyles)
+            foreach (var capturedStyle in capturedStyles)
             {
                 if (currentScope == null)
                 {
@@ -91,10 +94,11 @@ namespace ColorCode.Parsing
         }
 
         private static void AddScopeToNestedScopes(Scope scope,
-                                                   ref Scope currentScope,
-                                                   ICollection<Scope> capturedStyleTree)
+            ref Scope currentScope,
+            ICollection<Scope> capturedStyleTree)
         {
-            if (scope.Index >= currentScope.Index && (scope.Index + scope.Length <= currentScope.Index + currentScope.Length))
+            if (scope.Index >= currentScope.Index &&
+                scope.Index + scope.Length <= currentScope.Index + currentScope.Length)
             {
                 currentScope.AddChild(scope);
                 currentScope = scope;
@@ -112,82 +116,79 @@ namespace ColorCode.Parsing
 
 
         private List<Scope> GetCapturedStyles(Match regexMatch,
-                                                      int currentIndex,
-                                                      CompiledLanguage compiledLanguage)
+            int currentIndex,
+            CompiledLanguage compiledLanguage)
         {
             var capturedStyles = new List<Scope>();
 
-            for (int i = 0; i < regexMatch.Groups.Count; i++)
+            for (var i = 0; i < regexMatch.Groups.Count; i++)
             {
-                Group regexGroup = regexMatch.Groups[i];
-                string styleName = compiledLanguage.Captures[i];
+                var regexGroup = regexMatch.Groups[i];
+                var styleName = compiledLanguage.Captures[i];
 
-                if (regexGroup.Length == 0 || String.IsNullOrEmpty(styleName))
+                if (regexGroup.Length == 0 || string.IsNullOrEmpty(styleName))
                     continue;
-                else
-                    foreach (Capture regexCapture in regexGroup.Captures)
-                        AppendCapturedStylesForRegexCapture(regexCapture, currentIndex, styleName, capturedStyles);
+                foreach (Capture regexCapture in regexGroup.Captures)
+                    AppendCapturedStylesForRegexCapture(regexCapture, currentIndex, styleName, capturedStyles);
             }
 
             return capturedStyles;
         }
 
         private void AppendCapturedStylesForRegexCapture(Capture regexCapture,
-                                                         int currentIndex,
-                                                         string styleName,
-                                                         ICollection<Scope> capturedStyles)
+            int currentIndex,
+            string styleName,
+            ICollection<Scope> capturedStyles)
         {
             if (styleName.StartsWith(ScopeName.LanguagePrefix))
             {
-                string nestedGrammarId = styleName.Substring(1);
-                AppendCapturedStylesForNestedLanguage(regexCapture, regexCapture.Index - currentIndex, nestedGrammarId, capturedStyles);
+                var nestedGrammarId = styleName.Substring(1);
+                AppendCapturedStylesForNestedLanguage(regexCapture, regexCapture.Index - currentIndex, nestedGrammarId,
+                    capturedStyles);
             }
             else
+            {
                 capturedStyles.Add(new Scope(styleName, regexCapture.Index - currentIndex, regexCapture.Length));
+            }
         }
 
         private void AppendCapturedStylesForNestedLanguage(Capture regexCapture,
-                                                           int offset,
-                                                           string nestedLanguageId,
-                                                           ICollection<Scope> capturedStyles)
+            int offset,
+            string nestedLanguageId,
+            ICollection<Scope> capturedStyles)
         {
-            ILanguage nestedLanguage = languageRepository.FindById(nestedLanguageId);
+            var nestedLanguage = languageRepository.FindById(nestedLanguageId);
 
             if (nestedLanguage == null)
                 throw new InvalidOperationException("The nested language was not found in the language repository.");
-            else
+
+            var nestedCompiledLanguage = languageCompiler.Compile(nestedLanguage);
+
+            var regexMatch = nestedCompiledLanguage.Regex.Match(regexCapture.Value, 0, regexCapture.Value.Length);
+
+            if (!regexMatch.Success)
+                return;
+            while (regexMatch.Success)
             {
-                CompiledLanguage nestedCompiledLanguage = languageCompiler.Compile(nestedLanguage);
+                var capturedStylesForMatchedFragment = GetCapturedStyles(regexMatch, 0, nestedCompiledLanguage);
+                var capturedStyleTree = CreateCapturedStyleTree(capturedStylesForMatchedFragment);
 
-                Match regexMatch = nestedCompiledLanguage.Regex.Match(regexCapture.Value, 0, regexCapture.Value.Length);
-
-                if (!regexMatch.Success)
-                    return;
-                else
+                foreach (var nestedCapturedStyle in capturedStyleTree)
                 {
-                    while (regexMatch.Success)
-                    {
-                        List<Scope> capturedStylesForMatchedFragment = GetCapturedStyles(regexMatch, 0, nestedCompiledLanguage);
-                        List<Scope> capturedStyleTree = CreateCapturedStyleTree(capturedStylesForMatchedFragment);
-
-                        foreach (Scope nestedCapturedStyle in capturedStyleTree)
-                        {
-                            IncreaseCapturedStyleIndicies(capturedStyleTree, offset);
-                            capturedStyles.Add(nestedCapturedStyle);
-                        }
-
-                        regexMatch = regexMatch.NextMatch();
-                    }
+                    IncreaseCapturedStyleIndicies(capturedStyleTree, offset);
+                    capturedStyles.Add(nestedCapturedStyle);
                 }
+
+                regexMatch = regexMatch.NextMatch();
             }
         }
 
         private static void IncreaseCapturedStyleIndicies(IList<Scope> capturedStyles,
-                                                          int amountToIncrease)
+            int amountToIncrease)
         {
-            for (int i = 0; i < capturedStyles.Count; i++)
+            for (var i = 0; i < capturedStyles.Count; i++)
             {
-                Scope scope = capturedStyles[i];
+                var scope = capturedStyles[i];
 
                 scope.Index += amountToIncrease;
 

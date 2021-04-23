@@ -4,39 +4,42 @@ using System.IO;
 using System.Text;
 using ColorCode.Common;
 using ColorCode.Compilation;
-using ColorCode.Formatting;
 using ColorCode.Parsing;
 
 namespace ColorCode
 {
     /// <summary>
-    /// Colorizes source code.
+    ///     Colorizes source code.
     /// </summary>
     public class CodeColorizer : ICodeColorizer
     {
         private readonly ILanguageParser languageParser;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CodeColorizer"/> class.
+        ///     Initializes a new instance of the <see cref="CodeColorizer" /> class.
         /// </summary>
         public CodeColorizer()
         {
-            languageParser = new LanguageParser(new LanguageCompiler(Languages.CompiledLanguages), Languages.LanguageRepository);
+            languageParser = new LanguageParser(new LanguageCompiler(Languages.CompiledLanguages),
+                Languages.LanguageRepository);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CodeColorizer"/> class.
+        ///     Initializes a new instance of the <see cref="CodeColorizer" /> class.
         /// </summary>
-        /// <param name="languageParser">The language parser that the <see cref="CodeColorizer"/> instance will use for its lifetime.</param>
+        /// <param name="languageParser">
+        ///     The language parser that the <see cref="CodeColorizer" /> instance will use for its
+        ///     lifetime.
+        /// </param>
         public CodeColorizer(ILanguageParser languageParser)
         {
             Guard.ArgNotNull(languageParser, "languageParser");
-            
+
             this.languageParser = languageParser;
         }
 
         /// <summary>
-        /// Colorizes source code using the specified language, the default formatter, and the default style sheet.
+        ///     Colorizes source code using the specified language, the default formatter, and the default style sheet.
         /// </summary>
         /// <param name="sourceCode">The source code to colorize.</param>
         /// <param name="language">The language to use to colorize the source code.</param>
@@ -56,7 +59,7 @@ namespace ColorCode
         }
 
         /// <summary>
-        /// Colorizes source code using the specified language, the default formatter, and the default style sheet.
+        ///     Colorizes source code using the specified language, the default formatter, and the default style sheet.
         /// </summary>
         /// <param name="sourceCode">The source code to colorize.</param>
         /// <param name="language">The language to use to colorize the source code.</param>
@@ -67,7 +70,7 @@ namespace ColorCode
         }
 
         /// <summary>
-        /// Colorizes source code using the specified language, formatter, and style sheet.
+        ///     Colorizes source code using the specified language, formatter, and style sheet.
         /// </summary>
         /// <param name="sourceCode">The source code to colorize.</param>
         /// <param name="language">The language to use to colorize the source code.</param>
@@ -75,10 +78,10 @@ namespace ColorCode
         /// <param name="styleSheet">The style sheet to use to colorize the source code.</param>
         /// <param name="textWriter">The text writer to which the colorized source code will be written.</param>
         public void Colorize(string sourceCode,
-                             ILanguage language,
-                             IFormatter formatter,
-                             IStyleSheet styleSheet,
-                             TextWriter textWriter)
+            ILanguage language,
+            IFormatter formatter,
+            IStyleSheet styleSheet,
+            TextWriter textWriter)
         {
             Guard.ArgNotNull(language, "language");
             Guard.ArgNotNull(formatter, "formatter");
@@ -87,7 +90,8 @@ namespace ColorCode
 
             formatter.WriteHeader(styleSheet, language, textWriter);
 
-            languageParser.Parse(sourceCode, language, (parsedSourceCode, captures) => formatter.Write(parsedSourceCode, captures, styleSheet, textWriter));
+            languageParser.Parse(sourceCode, language,
+                (parsedSourceCode, captures) => formatter.Write(parsedSourceCode, captures, styleSheet, textWriter));
 
             formatter.WriteFooter(styleSheet, language, textWriter);
         }

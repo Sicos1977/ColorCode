@@ -28,7 +28,7 @@ namespace ColorCode.Compilation
 
             if (string.IsNullOrEmpty(language.Id))
                 throw new ArgumentException("The language identifier must not be null.", "language");
-            
+
             CompiledLanguage compiledLanguage;
 
             compileLock.EnterReadLock();
@@ -49,7 +49,9 @@ namespace ColorCode.Compilation
             try
             {
                 if (compiledLanguages.ContainsKey(language.Id))
+                {
                     compiledLanguage = compiledLanguages[language.Id];
+                }
                 else
                 {
                     compileLock.EnterWriteLock();
@@ -58,10 +60,10 @@ namespace ColorCode.Compilation
                     {
                         if (string.IsNullOrEmpty(language.Name))
                             throw new ArgumentException("The language name must not be null or empty.", "language");
-                        
+
                         if (language.Rules == null || language.Rules.Count == 0)
                             throw new ArgumentException("The language rules collection must not be empty.", "language");
-                        
+
                         compiledLanguage = CompileLanguage(language);
 
                         compiledLanguages.Add(compiledLanguage.Id, compiledLanguage);
@@ -82,8 +84,8 @@ namespace ColorCode.Compilation
 
         private static CompiledLanguage CompileLanguage(ILanguage language)
         {
-            string id = language.Id;
-            string name = language.Name;
+            var id = language.Id;
+            var name = language.Name;
             Regex regex;
             IList<string> captures;
 
@@ -93,10 +95,10 @@ namespace ColorCode.Compilation
         }
 
         private static void CompileRules(IList<LanguageRule> rules,
-                                         out Regex regex,
-                                         out IList<string> captures)
+            out Regex regex,
+            out IList<string> captures)
         {
-            StringBuilder regexBuilder = new StringBuilder();
+            var regexBuilder = new StringBuilder();
             captures = new List<string>();
 
             regexBuilder.AppendLine("(?x)");
@@ -104,7 +106,7 @@ namespace ColorCode.Compilation
 
             CompileRule(rules[0], regexBuilder, captures, true);
 
-            for (int i = 1; i < rules.Count; i++)
+            for (var i = 1; i < rules.Count; i++)
                 CompileRule(rules[i], regexBuilder, captures, false);
 
             regex = new Regex(regexBuilder.ToString());
@@ -112,9 +114,9 @@ namespace ColorCode.Compilation
 
 
         private static void CompileRule(LanguageRule languageRule,
-                                                 StringBuilder regex,
-                                                 ICollection<string> captures,
-                                                 bool isFirstRule)
+            StringBuilder regex,
+            ICollection<string> captures,
+            bool isFirstRule)
         {
             if (!isFirstRule)
             {
@@ -123,23 +125,21 @@ namespace ColorCode.Compilation
                 regex.AppendLine("|");
                 regex.AppendLine();
             }
-            
+
             regex.AppendFormat("(?-xis)(?m)({0})(?x)", languageRule.Regex);
 
-            int numberOfCaptures = GetNumberOfCaptures(languageRule.Regex);
+            var numberOfCaptures = GetNumberOfCaptures(languageRule.Regex);
 
-            for (int i = 0; i <= numberOfCaptures; i++)
+            for (var i = 0; i <= numberOfCaptures; i++)
             {
                 string scope = null;
 
-                foreach (int captureIndex in languageRule.Captures.Keys)
-                {
+                foreach (var captureIndex in languageRule.Captures.Keys)
                     if (i == captureIndex)
                     {
                         scope = languageRule.Captures[captureIndex];
                         break;
                     }
-                }
 
                 captures.Add(scope);
             }

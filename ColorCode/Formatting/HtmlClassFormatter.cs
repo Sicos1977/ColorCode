@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using ColorCode.Common;
@@ -11,22 +9,23 @@ namespace ColorCode.Formatting
     public class HtmlClassFormatter : IFormatter
     {
         public void Write(string parsedSourceCode,
-                          IList<Scope> scopes,
-                          IStyleSheet styleSheet,
-                          TextWriter textWriter)
+            IList<Scope> scopes,
+            IStyleSheet styleSheet,
+            TextWriter textWriter)
         {
             var styleInsertions = new List<TextInsertion>();
 
-            foreach (Scope scope in scopes)
+            foreach (var scope in scopes)
                 GetStyleInsertionsForCapturedStyle(scope, styleInsertions);
 
             styleInsertions.SortStable((x, y) => x.Index.CompareTo(y.Index));
 
-            int offset = 0;
+            var offset = 0;
 
-            foreach (TextInsertion styleInsertion in styleInsertions)
+            foreach (var styleInsertion in styleInsertions)
             {
-                textWriter.Write(HttpUtility.HtmlEncode(parsedSourceCode.Substring(offset, styleInsertion.Index - offset)));
+                textWriter.Write(
+                    HttpUtility.HtmlEncode(parsedSourceCode.Substring(offset, styleInsertion.Index - offset)));
                 if (string.IsNullOrEmpty(styleInsertion.Text))
                     BuildSpanForCapturedStyle(styleInsertion.Scope, styleSheet, textWriter);
                 else
@@ -38,8 +37,8 @@ namespace ColorCode.Formatting
         }
 
         public void WriteFooter(IStyleSheet styleSheet,
-                                ILanguage language,
-                                TextWriter textWriter)
+            ILanguage language,
+            TextWriter textWriter)
         {
             Guard.ArgNotNull(styleSheet, "styleSheet");
             Guard.ArgNotNull(language, "language");
@@ -51,8 +50,8 @@ namespace ColorCode.Formatting
         }
 
         public void WriteHeader(IStyleSheet styleSheet,
-                                ILanguage language,
-                                TextWriter textWriter)
+            ILanguage language,
+            TextWriter textWriter)
         {
             Guard.ArgNotNull(styleSheet, "styleSheet");
             Guard.ArgNotNull(language, "language");
@@ -72,7 +71,7 @@ namespace ColorCode.Formatting
             });
 
 
-            foreach (Scope childScope in scope.Children)
+            foreach (var childScope in scope.Children)
                 GetStyleInsertionsForCapturedStyle(childScope, styleInsertions);
 
             styleInsertions.Add(new TextInsertion
@@ -83,14 +82,14 @@ namespace ColorCode.Formatting
         }
 
         private static void BuildSpanForCapturedStyle(Scope scope,
-                                                        IStyleSheet styleSheet,
-                                                        TextWriter writer)
+            IStyleSheet styleSheet,
+            TextWriter writer)
         {
-            string cssClassName = "";
+            var cssClassName = "";
 
             if (styleSheet.Styles.Contains(scope.Name))
             {
-                Style style = styleSheet.Styles[scope.Name];
+                var style = styleSheet.Styles[scope.Name];
 
                 cssClassName = style.CssClassName;
             }
@@ -104,7 +103,7 @@ namespace ColorCode.Formatting
         }
 
         private static void WriteElementEnd(string elementName,
-                                            TextWriter writer)
+            TextWriter writer)
         {
             writer.Write("</{0}>", elementName);
         }
@@ -120,26 +119,24 @@ namespace ColorCode.Formatting
         }
 
         private static void WriteHeaderDivStart(IStyleSheet styleSheet,
-                                                ILanguage language,
-                                                TextWriter writer)
+            ILanguage language,
+            TextWriter writer)
         {
             WriteElementStart("div", language.CssClassName, writer);
         }
 
         private static void WriteElementStart(string elementName,
-                                              TextWriter writer)
+            TextWriter writer)
         {
             WriteElementStart(elementName, "", writer);
         }
 
         private static void WriteElementStart(string elementName,
-                                              string cssClassName,
-                                              TextWriter writer)
+            string cssClassName,
+            TextWriter writer)
         {
             writer.Write("<{0}", elementName);
-            if (!String.IsNullOrEmpty(cssClassName)) {
-                writer.Write(" class=\"{0}\"", cssClassName);
-            }
+            if (!string.IsNullOrEmpty(cssClassName)) writer.Write(" class=\"{0}\"", cssClassName);
             writer.Write(">");
         }
     }
